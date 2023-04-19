@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AddressBookInfoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Kana" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="Prefecture" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="StreetAddress" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+    <Property Name="Telephone" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="Mail" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Group_Id" Type="Int32" />
+    <NavigationProperty Name="Group" Relationship="Self.FK_dbo_Addresses_Group_Id" FromRole="Addresses" ToRole="Groups" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Addresses" Relationship="Self.FK_dbo_Addresses_Group_Id" FromRole="Groups" ToRole="Addresses" />
+  </EntityType>
+  <Association Name="FK_dbo_Addresses_Group_Id">
+    <End Role="Groups" Type="Self.Group" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Addresses" Type="Self.Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Addresses">
+        <PropertyRef Name="Group_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AddressBookInfoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Addresses" EntityType="Self.Address" />
+    <EntitySet Name="Groups" EntityType="Self.Group" />
+    <AssociationSet Name="FK_dbo_Addresses_Group_Id" Association="Self.FK_dbo_Addresses_Group_Id">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="Addresses" EntitySet="Addresses" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

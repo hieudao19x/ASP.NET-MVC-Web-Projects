@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AddressBookInfoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Addresses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Kana" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="ZipCode" Type="nvarchar" MaxLength="7" />
+    <Property Name="Prefecture" Type="nvarchar" MaxLength="10" />
+    <Property Name="StreetAddress" Type="nvarchar" MaxLength="600" />
+    <Property Name="Telephone" Type="nvarchar" MaxLength="11" />
+    <Property Name="Mail" Type="nvarchar" MaxLength="128" />
+    <Property Name="Group_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Groups">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_dbo_Addresses_Group_Id">
+    <End Role="Groups" Type="Self.Groups" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Addresses" Type="Self.Addresses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Addresses">
+        <PropertyRef Name="Group_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AddressBookInfoModelStoreContainer">
+    <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_dbo_Addresses_Group_Id" Association="Self.FK_dbo_Addresses_Group_Id">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="Addresses" EntitySet="Addresses" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,103 @@
+﻿@using AddressBookApp.Models
+@model AddressBookApp.Models.SearchViewModel
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<h2>Search</h2>
+
+
+@using (Html.BeginForm("Search", "Addresses", FormMethod.Get)) 
+{
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Kana, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Kana, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Kana, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="検索" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@{
+    var address = new Address();
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => address.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => address.Kana)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => address.ZipCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => address.Prefecture)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => address.StreetAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => address.Telephone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => address.Mail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => address.Group.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Addresses)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kana)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZipCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prefecture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StreetAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telephone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

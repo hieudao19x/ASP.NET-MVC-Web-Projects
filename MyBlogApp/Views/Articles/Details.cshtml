@@ -1,0 +1,78 @@
+﻿@using MyBlogApp.Models
+@model MyBlogApp.Models.Article
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<div>
+    <div class="page-header">
+        <h2>@Html.DisplayFor(model => model.Title)</h2>
+    </div>
+    <p class="text-muted">
+        @Html.DisplayNameFor(model => model.Category.CategoryName):
+        @if (Model.Category != null)
+         {
+            @Html.ActionLink(Model.Category.CategoryName, "Details", new { id = Model.Category.Id, Controller = "Categories"})
+         }
+        else
+        {
+            <span>なし</span>
+        }
+    </p>
+    <div class="lead">
+        @Html.DisplayFor(model => model.Body)
+    </div>
+
+    <div class="text-right text-muted">
+        @Html.DisplayNameFor(model => model.CreatedOn):
+        @Html.DisplayFor(model => model.CreatedOn)
+
+        if (model.Modified != null) 
+        {
+            @Html.DisplayNameFor(model => model.Modified)<span>:</span>
+            @Html.DisplayFor(model => model.Modified)
+        }
+
+
+        @if (User.IsInRole("Owners"))
+        {
+            @Html.ActionLink("更新", "Edit", new { Id = Model.Id }, new { @class = "btn btn-xs btn-info" })
+            @Html.ActionLink("削除", "Delete", new { Id = Model.Id }, new { @class = "btn btn-xs btn-danger" })
+        }
+    </div>
+
+    <hr/>
+
+    @using (Html.BeginForm("CreateComment", "Articles"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("ArticleId", Model.Id)
+
+        <div class="form-group">
+            @Html.TextArea("Body", "", new { @class = "form-control", placeholder = "コメント", rows = 3 })
+        </div>
+        <input type="submit" value="投稿" class="btn btn-default"/>
+    }
+
+    @foreach (Comment item in Model.Comments)
+    {
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @Html.DisplayFor(model => item.Body)
+            </div>
+            <div class="panel-footer text-right">
+                <span class="text-muted">
+                    @Html.DisplayNameFor(model => item.Created):
+                    @Html.DisplayFor(model => item.Created)
+                </span>
+                @if (User.IsInRole("Owners"))
+                {
+                    @Html.ActionLink("削除", "DeleteComment", new { id = item.Id }, new { @class = "btn btn-xs btn-danger"})
+
+                }
+            </div>
+        </div>
+    }
+</div>

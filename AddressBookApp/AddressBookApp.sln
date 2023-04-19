@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33328.57
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBookApp", "AddressBookApp.csproj", "{2E50872B-CC7F-43DF-967A-C70349B0F99C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvImport", "..\CsvImport\CsvImport.csproj", "{79A1BCD3-8466-486E-BFCC-A35550EF760C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E50872B-CC7F-43DF-967A-C70349B0F99C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E50872B-CC7F-43DF-967A-C70349B0F99C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E50872B-CC7F-43DF-967A-C70349B0F99C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E50872B-CC7F-43DF-967A-C70349B0F99C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79A1BCD3-8466-486E-BFCC-A35550EF760C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79A1BCD3-8466-486E-BFCC-A35550EF760C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79A1BCD3-8466-486E-BFCC-A35550EF760C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79A1BCD3-8466-486E-BFCC-A35550EF760C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {99457550-CB4D-45DC-B5DE-26A23859C9BD}
+	EndGlobalSection
+EndGlobal

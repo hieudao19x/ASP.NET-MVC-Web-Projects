@@ -1,0 +1,60 @@
+﻿@using MyBlogApp.Models
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css"/>
+    <style type="text/css">
+        body {
+            padding-top: 70px;
+        }
+        .article-body {
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("MyBlog", "Index", new { Controller = "Articles" }, new { @class = "navbar-brand" })
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                @if (Request.IsAuthenticated)
+                 {
+                    <li>@Html.ActionLink("投稿する", "Create", "Articles")</li>
+                    <li>@Html.ActionLink("ログアウト", "SignOut", "Login")</li>
+                 }
+                else
+                {
+                    <li>@Html.ActionLink("ログイン", "Index", "Login")</li>
+                }
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="col-md-9">
+            @RenderBody()
+        </div>
+        <div class="col-md-3">
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    カテゴリー
+                </li>
+                @{ 
+                    var categories = (List<Category>)ViewBag.Categories;
+                    foreach (var item in categories)
+                    {
+                        <li class="list-group-item">
+                            <span class="badge">@Html.DisplayFor(model => item.Count)</span>
+                            @Html.ActionLink(item.CategoryName, "Details", new { Controller = "Categories", id = item.Id })
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

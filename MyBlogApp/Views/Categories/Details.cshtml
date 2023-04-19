@@ -1,0 +1,41 @@
+﻿@model MyBlogApp.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<h2>
+    @Html.DisplayFor(model => model.CategoryName)
+</h2>
+
+@foreach (var item in Model.Articles)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @Html.DisplayFor(model => item.Title)
+        </div>
+        <div class="panel-body">
+            <div class="article-body">
+                @Html.DisplayFor(model => item.Body)
+            </div>
+            <div class="text-right text-muted">
+                @Html.ActionLink("続きを読む", "Details", new { id = item.Id, Controller = "Articles"})
+            </div>
+        </div>
+        <div class="panel-footer text-right">
+            @Html.DisplayNameFor(model => item.CategoryName):
+            @Html.ActionLink(item.Category.CategoryName, "Details", new { Id = item.Category.Id })
+
+            @Html.DisplayNameFor(model => item.CreatedOn):
+            @Html.DisplayFor(model => item.CreatedOn)
+
+            @if (item.Modified != null)
+            {
+                @Html.DisplayNameFor(model => item.Modified)<span>:</span>
+                @Html.DisplayFor(model => item.Modified)
+            }
+
+        </div>
+    </div>
+}
